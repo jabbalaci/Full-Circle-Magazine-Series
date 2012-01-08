@@ -2,14 +2,26 @@
 
 import os
 import sys
+import errno
 
 # extract.py
 
-if len(sys.argv) == 1:
-    print "Usage: %s series.csv" % sys.argv[0]
+# one parameter is required and that parameter must be a .csv file
+if (len(sys.argv) == 1) or (os.path.splitext(sys.argv[1])[1] != '.csv'):
+    print "Usage: {prg} series.csv".format(prg=sys.argv[0])
+    print "Tip: the passed parameter file must have .csv extension."
     sys.exit()
 
-# else, if a parameter was passed
+# else, if a .csv file was passed
+
+topic = os.path.splitext(sys.argv[1])[0]    # ex. gimp.csv => gimp
+
+try:
+    os.makedirs("{topic}/result".format(topic=topic))
+except OSError as exc:
+    if exc.errno == errno.EEXIST:
+        pass
+    else: raise
 
 f1 = open(sys.argv[1], 'r')
 
@@ -19,7 +31,7 @@ for line in f1:
     # else
     line = line.rstrip('\n')
     (issue, start_page, end_page) = line.split(';')
-    command = "pdftk issues/issue%s_en.pdf cat %s-%s output pieces/%s-%s.pdf" % (issue, start_page, end_page, issue, os.path.splitext(sys.argv[1])[0] )
+    command = "pdftk issues/issue{n}_en.pdf cat {start}-{end} output {topic}/{issue}-{topic}.pdf".format(n=issue, start=start_page, end=end_page, issue=issue, topic=topic)
     print command
     os.system(command)
 

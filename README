@@ -2,7 +2,7 @@ Full-Circle-Magazine-Series
 ===========================
 
 Author:      Laszlo Szathmary (jabba.laci@gmail.com)
-Last update: 2011-08-27 (yyyy-mm-dd)
+Last update: 2012-01-08 (yyyy-mm-dd)
 Version:     0.2
 
 Home page: https://ubuntuincident.wordpress.com/2011/02/21/python-tutorials-of-full-circle-magazine-in-a-single-pdf/
@@ -27,8 +27,8 @@ Usage:
     You can write your own series.csv file (ex.: gimp.csv) to extract
     a different series.
 
-./03-combine-pieces.sh
+./03-combine-pieces.py python.csv
     Combine the pieces together in a single PDF. Location of the result:
-    result/all.pdf.
+    python/result/all.pdf.
     If you combine the pieces with Adobe Acrobat Pro, the size of the
     resulting file will be very small. Pdftk produces a much larger file.
