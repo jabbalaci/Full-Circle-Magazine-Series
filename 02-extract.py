@@ -21,18 +21,21 @@ try:
 except OSError as exc:
     if exc.errno == errno.EEXIST:
         pass
-    else: raise
+    else:
+        raise
 
-f1 = open(sys.argv[1], 'r')
-
-for line in f1:
-    if line.startswith('#'):
-        continue
-    # else
-    line = line.rstrip('\n')
-    (issue, start_page, end_page) = line.split(';')
-    command = "pdftk issues/issue{n}_en.pdf cat {start}-{end} output {topic}/{issue}-{topic}.pdf".format(n=issue, start=start_page, end=end_page, issue=issue, topic=topic)
-    print command
-    os.system(command)
-
-f1.close()
+with open(sys.argv[1], 'r') as f1:
+    for line in f1:
+        if line.startswith('#'):
+            continue
+        # else
+        line = line.rstrip('\n')
+        (issue, start_page, end_page) = line.split(';')
+        cmd = "pdftk issues/issue{n}_en.pdf cat {start}-{end} output {topic}/{issue}-{topic}.pdf".format(
+            n=issue,
+            start=start_page,
+            end=end_page,
+            issue=issue,
+            topic=topic)
+        print cmd
+        os.system(cmd)
